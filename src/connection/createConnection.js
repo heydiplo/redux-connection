@@ -6,12 +6,17 @@ import { some, each, isPlainObject, isArray } from 'lodash'
 
 import type { RequestParams, Response, ErrorResponse, SuccessfulResponse } from '../types'
 
+type ExtractErrorResponse = ({}) => any
+
 type ConnectionConfig = {|
   endpoint: string,
-  credentials?: CredentialsType
+  credentials?: CredentialsType,
+  extractErrorResponse?: ExtractErrorResponse
 |}
 
-const handleResponse = (response): Promise<SuccessfulResponse> => (
+const defaultHandleErrorReponse: ExtractErrorResponse = (v) => v
+
+const createHandleResponse = (extractErrorResponse: ExtractErrorResponse) => (response): Promise<SuccessfulResponse> => (
   response.text()
     .then((text) => {
       if (response.ok) {
@@ -20,7 +25,8 @@ const handleResponse = (response): Promise<SuccessfulResponse> => (
 
       let error
       try {
-        error = JSON.parse(text).data.errors
+        error = JSON.parse(text)
+        error = extractErrorResponse(error)
       } catch (e) {
         error = { message: text }
       }
@@ -60,8 +66,10 @@ const formBody = (params) => {
 
 const jsonBody = (params) =>  JSON.stringify(params)
 
-export default ({ endpoint, credentials }: ConnectionConfig) =>
-  ({
+export default ({ endpoint, credentials, extractErrorResponse }: ConnectionConfig) => {
+  const handleResponse = createHandleResponse(extractErrorResponse || defaultHandleErrorReponse)
+
+  return ({
     method, path, params, headers: _headers
   }: RequestParams): Promise<Response> => {
     let body
@@ -94,3 +102,4 @@ export default ({ endpoint, credentials }: ConnectionConfig) =>
       handleNetworkError
     )
   }
+}
