@@ -11,6 +11,7 @@ export default (api: any) => {
     POST: wrapper('POST'),
     GET: wrapper('GET'),
     DELETE: wrapper('DELETE'),
-    PATCH: wrapper('PATCH')
+    PATCH: wrapper('PATCH'),
+    PUT: wrapper('PUT')
   }
 }

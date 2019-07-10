@@ -4,7 +4,7 @@
   "homepage": "https://github.com/heydiplo/redux-connection",
   "repository": "github:heydiplo/redux-connection",
   "bugs": "https://github.com/heydiplo/redux-connection/issues",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.js",
