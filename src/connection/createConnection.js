@@ -11,7 +11,8 @@ type ExtractErrorResponse = ({}) => any
 type ConnectionConfig = {|
   endpoint: string,
   credentials?: CredentialsType,
-  extractErrorResponse?: ExtractErrorResponse
+  extractErrorResponse?: ExtractErrorResponse,
+  paramsStringificationOptions: {}
 |}
 
 const defaultHandleErrorReponse: ExtractErrorResponse = (v) => v
@@ -66,7 +67,9 @@ const formBody = (params) => {
 
 const jsonBody = (params) =>  JSON.stringify(params)
 
-export default ({ endpoint, credentials, extractErrorResponse }: ConnectionConfig) => {
+export default ({
+  endpoint, credentials, extractErrorResponse, paramsStringificationOptions
+}: ConnectionConfig) => {
   const handleResponse = createHandleResponse(extractErrorResponse || defaultHandleErrorReponse)
 
   return ({
@@ -77,7 +80,7 @@ export default ({ endpoint, credentials, extractErrorResponse }: ConnectionConfi
     let json
 
     if (method === 'GET') {
-      const query = stringify(params || {})
+      const query = stringify(params || {}, paramsStringificationOptions)
       if (query) url = `${url}?${query}`
     } else {
       json = !some(params, (value) => value instanceof File)
