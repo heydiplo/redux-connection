@@ -4,7 +4,7 @@
   "homepage": "https://github.com/heydiplo/redux-connection",
   "repository": "github:heydiplo/redux-connection",
   "bugs": "https://github.com/heydiplo/redux-connection/issues",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "license": "MIT",
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -17,7 +17,7 @@
     "es6-promise": "^4.2.8",
     "isomorphic-fetch": "^2.2.1",
     "lodash": "4",
-    "qs": "^6.7.0"
+    "qs": "^6.9.3"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -28,7 +28,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-react": "^6.24.1",
-    "jest": "^23.5.0"
+    "jest": "^25.5.3"
   },
   "jest": {
     "rootDir": "./",
